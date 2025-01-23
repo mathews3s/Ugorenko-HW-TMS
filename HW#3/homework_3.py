@@ -1,11 +1,11 @@
-# task 1
+# task 1: Сложность алгоритма O(√n)
 
 print("\nЗадание 1")
 
 border_value = int(input("Введите число: "))
 number, power = 1, 1
 
-while power < border_value:  # O(√n - 1)
+while power < border_value:
     print(power, end=" ")
     number += 1
     power = number ** 2
@@ -13,14 +13,14 @@ while power < border_value:  # O(√n - 1)
 
 
 
-# task 2
+# task 2: Сложность алгоритма O(n)
 
 print("\nЗадание 2")
 
 number = int(input("Введите число: "))
 remind = number
 
-while remind >= 10:  # O(n - 1)
+while remind >= 10:
     remind //= 10
 
 print(f"Первая цифра числа - {remind}\n")
@@ -28,7 +28,7 @@ print(f"Первая цифра числа - {remind}\n")
 
 
 
-# task 3
+# task 3: Сложность алгоритма O(n)
 # Задание решено с учетом того, что 0 - не натуральное число (где-то считают, что он натурален)
 
 print("Задание 3")
@@ -37,7 +37,7 @@ number = int(input("Введите число: "))
 min_digit = 9
 remind = number
 
-while remind > 0:                 # O(n - 1)
+while remind > 0:
     current_digit = remind % 10
     if min_digit > current_digit:
         min_digit = current_digit
@@ -48,16 +48,16 @@ print(f"Минимальная цифра в числе - {min_digit}\n")
 
 
 
-# task 4
+# task 4: Сложность алгоритма O(n)
 print("Задание 4")
 
 some_str = input("Введите строку: ")
 
-print(f"Третий символ строки: {some_str[2]}")
-print(f"Предпоследний символ строки: {some_str[-2]}")
-print(f"Первые пять символов строки: {some_str[:5]}")
+print(f"Третий символ строки: {some_str[2]}")                       # 0(1)
+print(f"Предпоследний символ строки: {some_str[-2]}")               # 0(1)
+print(f"Первые пять символов строки: {some_str[:5]}")               # 0(5) ?
 print(f"Все, кроме последних двух символов: {some_str[:-2]} ")      # 0(n - 2) ?
-print(f"Символы с четными индексами: {some_str[::2]}")              # 0(n)
+print(f"Символы с четными индексами: {some_str[::2]}")              # 0(n / 2)
 print(f"Символы с нечетными индексами: {some_str[1::2]}")           # O(n / 2)
 print(f"Символы через один в обратном порядке: {some_str[-1::-2]}") # O(n / 2)
 print(f"Длинна строки: {len(some_str)}\n")
@@ -65,9 +65,8 @@ print(f"Длинна строки: {len(some_str)}\n")
 
 
 
-# task 5
+# task 5: Сложность алгоритма O(n)
 print("Задание 5")
-# Сложность алгоритма - O(n)
 
 some_str = input("Введите строку из 2-х слов: ")
 words = some_str.split()  # O(n)?
@@ -79,7 +78,7 @@ print(new_str)
 
 
 
-# task 6
+# task 6: Сложность алгоритма O(n)
 print("\nЗадание 6")
 
 some_str = input("Введите строку: ")
@@ -92,11 +91,11 @@ else:
 
 
 
-# task 7
+# task 7: Сложность алгоритма O(n)
 print("\nЗадание 7")
 
 some_str = input("Введите строку содержащую 'f': ")
-f_count = some_str.count('f')
+f_count = some_str.count('f') # O(n)
 if f_count < 2:
     print(f"Индекс первой 'f': [{some_str.index('f')}]")
 elif f_count >= 2:
@@ -105,16 +104,16 @@ elif f_count >= 2:
 
 
 
-# task 8
+# task 8: Сложность алгоритма O(n^2)
 print("\nЗадание 8")
 
 first_list = list(map(int, input("Введите элементы 1-го списка через пробел: ").split()))
 second_list = list(map(int, input("Введите элементы 2-го списка через пробел: ").split()))
 common_elements = []
 
-for num in first_list:
-    if num in second_list:
-        common_elements.append(num)
+for num in first_list:               # O(n)
+    if num in second_list:           # O(n)
+        common_elements.append(num)  # O(1)
 
 if len(common_elements):
     print(f"Минимальный элемент 1-го списка, имеющийся во 2-ом - {min(common_elements)}\n")
@@ -124,18 +123,18 @@ else:
 
 
 
-# task 9
+# task 9: Здесь я не смог рассчитать сложность, вопрос по вложенному циклу
 print("Задание 9")
 
 elements_count = int(input("Введите кол-во элементов списка (k):"))
 elements = []
 inverse_count = 0
 
-for index in range(0, elements_count):
+for index in range(0, elements_count): # O(n)
     elements.append(int(input(f"Введите элемент списка по индексу [{index}]: ")))
 
-for left_index in range(0, len(elements) - 1):
-    for right_index in range(left_index + 1, len(elements)):
+for left_index in range(0, len(elements) - 1):               # O(n)
+    for right_index in range(left_index + 1, len(elements)): # ???????
         if elements[left_index] > elements[right_index]:
             inverse_count += 1
 
@@ -144,14 +143,14 @@ print(f"Количество инверсий: {inverse_count}\n")
 
 
 
-# task 10
+# task 10: Сложность алгоритма O(n^2)
 print("Задание 10")
 
 some_str = input("Введите строку: ")
 unic_chars = []
 
-for char in some_str:
-    if char not in unic_chars:
+for char in some_str: # O(n)
+    if char not in unic_chars: # O(n)
         unic_chars.append(char)
 
 result = "".join(unic_chars)
@@ -205,6 +204,9 @@ for char in some_string:
 
 some_string = unique_chars
 print(f"Строка без повторяющихся символов: '{some_string}'\n")
+
+
+
 
 # task 13
 print("Задание 13")
