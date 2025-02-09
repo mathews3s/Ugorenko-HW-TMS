@@ -1,0 +1,10 @@
+int
+str
+append()
+==
+datetime
+#
+and
+def
+=
+2025
