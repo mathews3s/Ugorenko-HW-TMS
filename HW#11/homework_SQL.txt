@@ -1,0 +1,166 @@
+1. Создать таблицу с заданными ограничениями и полями. Заполнить данные 15 актёров.
+
+CREATE TABLE "actors" (
+	"id"	INTEGER NOT NULL UNIQUE,
+	"name"	TEXT NOT NULL,
+	"surname"	TEXT NOT NULL,
+	"age"	INTEGER NOT NULL CHECK(age BETWEEN 5 AND 99),
+	"live_in"	TEXT,
+	"bank_account_budjet"	INTEGER DEFAULT 10000000,
+	"status"	TEXT CHECK(status IN ('single', 'married', 'divorced')),
+	"sex"	INTEGER NOT NULL CHECK(status IN ('male', 'female')),
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+
+
+INSERT INTO "main"."actors"
+(name, surname, age, live_in, status, sex)
+VALUES
+('John', 'Doe', 30, 'New York', 'single', 'male'),
+('Jane', 'Smith', 25, 'Los Angeles', 'married', 'female'),
+('Michael', 'Johnson', 40, 'Chicago', 'married', 'male'),
+('Emily', 'Brown', 35, 'Miami', 'divorced', 'female'),
+('William', 'Davis', 50, 'San Francisco', 'married', 'male'),
+('Olivia', 'Martinez', 28, 'Seattle', 'single', 'female'),
+('James', 'Rodriguez', 45, 'Dallas', 'married', 'male'),
+('Sophia', 'Garcia', 32, 'Boston', 'single', 'female'),
+('Daniel', 'Lopez', 38, 'Houston', 'married', 'male'),
+('Isabella', 'Perez', 27, 'Philadelphia', 'single', 'female'),
+('Alexander', 'Sanchez', 55, 'Phoenix', 'divorced', 'male'),
+('Mia', 'Torres', 33, 'Denver', 'single', 'female'),
+('Ethan', 'Ramirez', 42, 'Detroit', 'married', 'male'),
+('Ava', 'Nguyen', 29, 'Portland', 'single', 'female'),
+('Benjamin', 'Gomez', 48, 'Las Vegas', 'married', 'male');
+
+
+2. Добавить колонку count_movies INTEGER, заполнить количество фильмов.
+
+ALTER TABLE "main"."actors"
+ADD COLUMN count_movies INTEGER;
+
+UPDATE "main"."actors"
+SET count_movies =
+    CASE
+        WHEN name = 'John' AND surname = 'Doe' THEN 5
+        WHEN name = 'Jane' AND surname = 'Smith' THEN 8
+        WHEN name = 'Michael' AND surname = 'Johnson' THEN 12
+        WHEN name = 'Emily' AND surname = 'Brown' THEN 3
+        WHEN name = 'William' AND surname = 'Davis' THEN 15
+        WHEN name = 'Olivia' AND surname = 'Martinez' THEN 6
+        WHEN name = 'James' AND surname = 'Rodriguez' THEN 10
+        WHEN name = 'Sophia' AND surname = 'Garcia' THEN 7
+        WHEN name = 'Daniel' AND surname = 'Lopez' THEN 9
+        WHEN name = 'Isabella' AND surname = 'Perez' THEN 4
+        WHEN name = 'Alexander' AND surname = 'Sanchez' THEN 11
+        WHEN name = 'Mia' AND surname = 'Torres' THEN 5
+        WHEN name = 'Ethan' AND surname = 'Ramirez' THEN 13
+        WHEN name = 'Ava' AND surname = 'Nguyen' THEN 6
+        WHEN name = 'Benjamin' AND surname = 'Gomez' THEN 14
+    END;
+
+
+3. Переименовать колонку surname в last_name. Добавить колонку country_in, страна где проживают актёры в данный момент
+и внести все изменения в таблицу.
+
+
+ALTER TABLE "main"."actors"
+RENAME COLUMN surname TO last_name;
+
+ALTER TABLE "main"."actors"
+ADD COLUMN country_in TEXT;
+
+UPDATE "main"."actors"
+SET country_in =
+    CASE
+        WHEN name = 'John' AND last_name = 'Doe' THEN 'USA'
+        WHEN name = 'Jane' AND last_name = 'Smith' THEN 'USA'
+        WHEN name = 'Michael' AND last_name = 'Johnson' THEN 'Moskow'
+        WHEN name = 'Emily' AND last_name = 'Brown' THEN 'USA'
+        WHEN name = 'William' AND last_name = 'Davis' THEN 'USA'
+        WHEN name = 'Olivia' AND last_name = 'Martinez' THEN 'Moskow'
+		WHEN name = 'James' AND last_name = 'Rodriguez' THEN 'Norway'
+        WHEN name = 'Sophia' AND last_name = 'Garcia' THEN 'Australia'
+        WHEN name = 'Daniel' AND last_name = 'Lopez' THEN 'Norway'
+        WHEN name = 'Isabella' AND last_name = 'Perez' THEN 'Australia'
+        WHEN name = 'Alexander' AND last_name = 'Sanchez' THEN 'Brazil'
+        WHEN name = 'Mia' AND last_name = 'Torres' THEN 'Brazil'
+        WHEN name = 'Ethan' AND last_name = 'Ramirez' THEN 'Czech'
+        WHEN name = 'Ava' AND last_name = 'Nguyen' THEN 'UK'
+        WHEN name = 'Benjamin' AND last_name = 'Gomez' THEN 'UK'
+    END;
+
+4. Вывести всех актёров старше 26 лет.
+
+
+SELECT *
+FROM "main"."actors"
+WHERE age > 26;
+
+5. Найти всех пользователей с бюджетом больше 50 000. Вывод организовать в порядке убывания бюджета!
+
+
+SELECT *
+FROM "main"."actors"
+WHERE bank_account_budjet > 50000
+ORDER BY bank_account_budjet DESC;
+
+6. Вывести количество актёров мужского пола, которые есть в таблице которые старше 55 лет.
+
+SELECT COUNT(*)
+FROM "main"."actors"
+WHERE sex = 'male' AND age > 5
+
+7. Вывести всех актёров которые приняли участие в 22-х и более фильмах, и которые имеют на своём счету 10000000$.
+
+SELECT *
+FROM "main"."actors"
+WHERE count_movies >= 22 AND bank_account_budjet = 10000000;
+
+8. Найти всех актёров, живущих в "Moskow".
+
+SELECT *
+FROM "main"."actors"
+WHERE country_in = 'Moskow';
+
+9. Найти всех актёров, у которых имя начинается с буквы "А".
+
+SELECT *
+FROM "main"."actors"
+WHERE name LIKE 'A%';
+
+10.	Найти всех женщин старше 30 лет проживающих в USA
+
+SELECT *
+FROM "main"."actors"
+WHERE sex = 'female' AND age > 30 AND country_in = 'USA';
+
+11.	Найти всех актёров, у которых не указан город проживания.
+
+SELECT *
+FROM "main"."actors"
+WHERE country_in IS NULL OR country_in = '';
+
+12.	Вывести пользователей, у которых нет денег на счету.
+
+SELECT *
+FROM "main"."actors"
+WHERE bank_account_budjet = 0;
+
+13.	Вывести топ-5 актёров с самым большим бюджетом
+
+SELECT *
+FROM "main"."actors"
+ORDER BY bank_account_budjet DESC
+LIMIT 5;
+
+14.	Отсортировать актёров по возрасту (от старших к младшим).
+
+SELECT *
+FROM "main"."actors"
+ORDER BY age DESC;
+
+15.	Вывести всех одиноких актёров младше 50 лет
+
+SELECT *
+FROM "main"."actors"
+WHERE status = 'single' AND age < 50;
